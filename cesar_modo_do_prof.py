@@ -4,7 +4,7 @@
 import sys
 import getopt
 
-# import unidecode
+import unidecode
 
 # ---
 # 62 caracteres
@@ -18,28 +18,34 @@ def criptografa(des, k, in_name, out_name):
     if des:
         k *= -1
 
-    f_in = open(in_name, 'r')
-    texto_original = f_in.read()
+    f_in = open(in_name, 'r', encoding='utf8')
+    texto_com_acento = f_in.read()
     frase_mod = ""
 
     # pra tirar os acentos
-    #    texto_original = unidecode._unidecode(texto_original)
+    texto_original = unidecode.unidecode(texto_com_acento)
+    print("texto original")
+    print(texto_com_acento)
+    print("texto convertido para ASCII")
+    print(texto_original)
 
     for i in range(len(texto_original)):
-        # numeros
+        # ---
         if texto_original[i].isalpha() or texto_original[i].isdigit():
             posicao = alfabeto.index(texto_original[i])
             posicao += k
-            posicao = posicao%61
+            posicao = posicao % 61
             frase_mod += alfabeto[posicao]
         # oytros caracteres permanecem
         else:
             frase_mod += texto_original[i]
-        # salvando no arquivo de saida
-        f_out = open(out_name, 'w')
-        f_out.write(frase_mod)
-        f_in.close()
-        f_out.close()
+    # salvando no arquivo de saida
+    f_out = open(out_name, 'w')
+    f_out.write(frase_mod)
+    f_in.close()
+    f_out.close()
+    print("resultado")
+    print(frase_mod)
 
 
 def main(argv):
@@ -53,7 +59,7 @@ def main(argv):
     for opt, arg in opts:
         if opt == '-h':
             print("modo de uso:\ncesar.py -c -k 3 -i texto.txt -o saida.txt\nopcoes:\n"
-                  + " -i :arquivo de entrada\n -o :arquivo de saida"
+                  + " -i :arquivo de entrada\n -o :arquivo de saida\n"
                   + " -c :criptografa\n -d :descriptografa\n -k n :valor da chave")
             sys.exit()
         elif opt in ("-i"):
