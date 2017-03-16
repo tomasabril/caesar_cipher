@@ -1,1 +1,0 @@
-abc 123-Oi, esse é um texto para ser cifrado.
