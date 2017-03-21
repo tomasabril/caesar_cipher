@@ -4,7 +4,7 @@
 import sys
 import getopt
 
-import unidecode
+#import unidecode
 
 # ---
 # 62 caracteres
@@ -23,7 +23,8 @@ def criptografa(des, k, in_name, out_name):
     frase_mod = ""
 
     # pra tirar os acentos
-    texto_original = unidecode.unidecode(texto_com_acento)
+    #texto_original = unidecode.unidecode(texto_com_acento)
+    texto_original = texto_com_acento
     print("texto original")
     print(texto_com_acento)
     print("texto convertido para ASCII")
@@ -31,10 +32,10 @@ def criptografa(des, k, in_name, out_name):
 
     for i in range(len(texto_original)):
         # ---
-        if texto_original[i].isalpha() or texto_original[i].isdigit():
+        if texto_original[i] in alfabeto:
             posicao = alfabeto.index(texto_original[i])
             posicao += k
-            posicao = posicao % 61
+            posicao = posicao % len(alfabeto)
             frase_mod += alfabeto[posicao]
         # oytros caracteres permanecem
         else:
